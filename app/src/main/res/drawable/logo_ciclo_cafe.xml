@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Círculo de fondo -->
+    <path
+        android:fillColor="#6D4C41"
+        android:pathData="M60,10 A50,50 0 1,1 60,110 A50,50 0 1,1 60,10 Z"/>
+
+    <!-- Taza de café -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M35,45 L75,45 L75,80 Q75,85 70,85 L40,85 Q35,85 35,80 Z"/>
+
+    <!-- Asa de la taza -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:pathData="M75,55 Q85,55 85,65 Q85,75 75,75"/>
+
+    <!-- Vapor -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:pathData="M45,35 Q45,30 47,28 Q49,26 49,30"/>
+
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:pathData="M55,35 Q55,28 57,26 Q59,24 59,30"/>
+
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:pathData="M65,35 Q65,30 67,28 Q69,26 69,30"/>
+</vector>
+
