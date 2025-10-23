@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <!-- Table Header -->
+                    <!-- Table Header (Producto | Total) -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -78,26 +78,6 @@
                             android:textSize="14sp"
                             android:textColor="@color/coffee_text_primary"
                             android:gravity="center" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="V. total"
-                            android:textStyle="bold"
-                            android:textSize="14sp"
-                            android:textColor="@color/coffee_text_primary"
-                            android:gravity="center" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Recambio"
-                            android:textStyle="bold"
-                            android:textSize="14sp"
-                            android:textColor="@color/coffee_text_primary"
-                            android:gravity="center" />
                     </LinearLayout>
 
                     <!-- RecyclerView for table rows -->
@@ -115,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Guardar Salida"
+                android:text="@string/guardar_salida_button"
                 android:textSize="16sp"
                 android:padding="16dp"
                 app:icon="@android:drawable/ic_menu_save"
@@ -138,4 +118,3 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

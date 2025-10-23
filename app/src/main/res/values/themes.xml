@@ -17,7 +17,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.CicloCafe.NoActionBar">
+    <style name="Theme.CicloCafe.NoActionBar" parent="Theme.CicloCafe">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

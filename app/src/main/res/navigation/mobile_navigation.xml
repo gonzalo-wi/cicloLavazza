@@ -5,6 +5,14 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/nav_login">
 
+    <!-- Global actions -->
+    <action
+        android:id="@+id/action_global_home"
+        app:destination="@+id/nav_home" />
+    <action
+        android:id="@+id/action_global_reparto"
+        app:destination="@+id/nav_reparto" />
+
     <fragment
         android:id="@+id/nav_login"
         android:name="com.lavazza.ciclocafe.ui.login.LoginFragment"
@@ -25,6 +33,11 @@
         <action
             android:id="@+id/action_homeFragment_to_repartoFragment"
             app:destination="@+id/nav_reparto" />
+        <action
+            android:id="@+id/action_homeFragment_to_loginFragment"
+            app:destination="@+id/nav_login"
+            app:popUpTo="@+id/mobile_navigation"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -42,6 +55,11 @@
             app:destination="@+id/nav_salida"
             app:popUpTo="@+id/nav_home"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_repartoFragment_to_homeFragment"
+            app:destination="@+id/nav_home"
+            app:popUpTo="@+id/nav_home"
+            app:popUpToInclusive="false" />
         <argument
             android:name="tipo_operacion"
             app:argType="string"
@@ -56,6 +74,11 @@
         <action
             android:id="@+id/action_entrada_to_reparto"
             app:destination="@+id/nav_reparto" />
+        <action
+            android:id="@+id/action_entradaFragment_to_homeFragment"
+            app:destination="@+id/nav_home"
+            app:popUpTo="@+id/nav_home"
+            app:popUpToInclusive="false" />
     </fragment>
 
     <fragment
@@ -66,6 +89,11 @@
         <action
             android:id="@+id/action_salida_to_reparto"
             app:destination="@+id/nav_reparto" />
+        <action
+            android:id="@+id/action_salidaFragment_to_homeFragment"
+            app:destination="@+id/nav_home"
+            app:popUpTo="@+id/nav_home"
+            app:popUpToInclusive="false" />
     </fragment>
 
     <fragment

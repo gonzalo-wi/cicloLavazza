@@ -27,59 +27,35 @@ class SalidaAdapter(
         holder.bind(getItem(position))
     }
 
-    class SalidaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class SalidaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textProducto: TextView = itemView.findViewById(R.id.textProducto)
-        private val editVueltaLleno: EditText = itemView.findViewById(R.id.editVueltaLleno)
-        private val editVueltaTotal: EditText = itemView.findViewById(R.id.editVueltaTotal)
-        private val editRecambio: EditText = itemView.findViewById(R.id.editRecambio)
+        private val editTotal: EditText = itemView.findViewById(R.id.editTotal)
 
-        private var currentItem: SalidaItem? = null
-
-        private var watcherLleno: TextWatcher? = null
         private var watcherTotal: TextWatcher? = null
-        private var watcherRecambio: TextWatcher? = null
 
         fun bind(item: SalidaItem) {
-            currentItem = item
-
             textProducto.text = item.producto
 
-            // Remove previous watchers to avoid duplicate triggers on recycling
-            watcherLleno?.let { editVueltaLleno.removeTextChangedListener(it) }
-            watcherTotal?.let { editVueltaTotal.removeTextChangedListener(it) }
-            watcherRecambio?.let { editRecambio.removeTextChangedListener(it) }
+            // Remove previous watcher to avoid recursive triggers during setText
+            watcherTotal?.let { editTotal.removeTextChangedListener(it) }
 
-            // Set values without triggering watchers
-            editVueltaLleno.setText(if (item.vueltaLleno == 0) "" else item.vueltaLleno.toString())
-            editVueltaTotal.setText(if (item.vueltaTotal == 0) "" else item.vueltaTotal.toString())
-            editRecambio.setText(if (item.recambio == 0) "" else item.recambio.toString())
-
-            watcherLleno = object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-                override fun afterTextChanged(s: Editable?) {
-                    currentItem?.vueltaLleno = s?.toString()?.toIntOrNull() ?: 0
-                }
+            // Show empty when 0 for better UX
+            val textValue = if (item.total == 0) "" else item.total.toString()
+            if (editTotal.text.toString() != textValue) {
+                editTotal.setText(textValue)
             }
-            editVueltaLleno.addTextChangedListener(watcherLleno)
 
             watcherTotal = object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable?) {
-                    currentItem?.vueltaTotal = s?.toString()?.toIntOrNull() ?: 0
+                    val value = s?.toString()?.toIntOrNull() ?: 0
+                    if (value != item.total) {
+                        item.total = value
+                    }
                 }
             }
-            editVueltaTotal.addTextChangedListener(watcherTotal)
-
-            watcherRecambio = object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-                override fun afterTextChanged(s: Editable?) {
-                    currentItem?.recambio = s?.toString()?.toIntOrNull() ?: 0
-                }
-            }
-            editRecambio.addTextChangedListener(watcherRecambio)
+            editTotal.addTextChangedListener(watcherTotal)
         }
     }
 
@@ -93,4 +69,3 @@ class SalidaAdapter(
         }
     }
 }
-

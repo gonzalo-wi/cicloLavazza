@@ -28,16 +28,18 @@ class HomeFragment : Fragment() {
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
         // Configurar listeners para las cards
-        binding.cardIniciarReparto.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_repartoFragment)
-        }
-
         binding.cardEntrada.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_repartoFragment)
+            val bundle = Bundle().apply {
+                putString("tipo_operacion", "entrada")
+            }
+            findNavController().navigate(R.id.nav_reparto, bundle)
         }
 
         binding.cardSalida.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_repartoFragment)
+            val bundle = Bundle().apply {
+                putString("tipo_operacion", "salida")
+            }
+            findNavController().navigate(R.id.nav_reparto, bundle)
         }
 
         // Observar cambios en las estadísticas

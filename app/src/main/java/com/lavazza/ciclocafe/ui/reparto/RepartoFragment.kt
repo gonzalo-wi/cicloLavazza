@@ -18,6 +18,7 @@ class RepartoFragment : Fragment() {
     private lateinit var editNumeroReparto: EditText
     private lateinit var btnContinuar: Button
     private lateinit var repartoViewModel: RepartoViewModel
+    private var tipoOperacion: String = "entrada" // Por defecto entrada
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,6 +28,9 @@ class RepartoFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_reparto, container, false)
 
         repartoViewModel = ViewModelProvider(requireActivity()).get(RepartoViewModel::class.java)
+
+        // Obtener el argumento del tipo de operación
+        tipoOperacion = arguments?.getString("tipo_operacion") ?: "entrada"
 
         editNumeroReparto = root.findViewById(R.id.editNumeroReparto)
         btnContinuar = root.findViewById(R.id.btnContinuar)
@@ -42,7 +46,13 @@ class RepartoFragment : Fragment() {
                 Toast.makeText(context, "Solo se permiten los repartos ${Constants.Repartos.REPARTO_502} y ${Constants.Repartos.REPARTO_503}", Toast.LENGTH_LONG).show()
             } else {
                 repartoViewModel.setNumeroReparto(numeroReparto)
-                findNavController().navigate(R.id.action_repartoFragment_to_entradaFragment)
+
+                // Navegar según el tipo de operación
+                if (tipoOperacion == "salida") {
+                    findNavController().navigate(R.id.action_repartoFragment_to_salidaFragment)
+                } else {
+                    findNavController().navigate(R.id.action_repartoFragment_to_entradaFragment)
+                }
             }
         }
 

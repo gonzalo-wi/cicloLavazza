@@ -213,9 +213,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layoutStats" />
 
-        <!-- Botón Iniciar Reparto -->
+        <!-- Botón Registrar Entrada -->
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardIniciarReparto"
+            android:id="@+id/cardEntrada"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -233,7 +233,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/side_nav_bar"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="20dp">
@@ -241,64 +240,7 @@
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:contentDescription="Iniciar Reparto"
-                    android:src="@drawable/ic_truck" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Iniciar Reparto"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:alpha="0.87"
-                        android:text="Seleccionar número de reparto"
-                        android:textColor="@color/white"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Botón Registrar Entrada -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardEntrada"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardIniciarReparto">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="20dp">
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:contentDescription="Entrada"
+                    android:contentDescription="@string/entrada_desc"
                     android:src="@drawable/ic_truck_entrada" />
 
                 <LinearLayout
@@ -311,7 +253,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Registrar Entrada"
+                        android:text="@string/register_entrada"
                         android:textColor="@color/coffee_primary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -320,7 +262,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Productos que llegan al depósito"
+                        android:text="@string/entrada_subtitle"
                         android:textColor="@color/coffee_text_secondary"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -356,7 +298,7 @@
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:contentDescription="Salida"
+                    android:contentDescription="@string/salida_desc"
                     android:src="@drawable/ic_truck_exit" />
 
                 <LinearLayout
@@ -369,7 +311,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Registrar Salida"
+                        android:text="@string/register_salida"
                         android:textColor="@color/coffee_primary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -378,7 +320,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Productos que salen del depósito"
+                        android:text="@string/salida_subtitle"
                         android:textColor="@color/coffee_text_secondary"
                         android:textSize="14sp" />
                 </LinearLayout>

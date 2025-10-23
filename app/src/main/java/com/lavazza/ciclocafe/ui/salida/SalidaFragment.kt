@@ -15,11 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lavazza.ciclocafe.R
-import com.lavazza.ciclocafe.data.model.SalidaRequest
 import com.lavazza.ciclocafe.data.model.Product
-import com.lavazza.ciclocafe.data.model.ProductExit
-import com.lavazza.ciclocafe.data.repository.SalidaRepository
+import com.lavazza.ciclocafe.data.model.OutProduct
+import com.lavazza.ciclocafe.data.model.OutRequest
 import com.lavazza.ciclocafe.data.repository.ProductRepository
+import com.lavazza.ciclocafe.data.repository.SalidaRepository
 import com.lavazza.ciclocafe.ui.reparto.RepartoViewModel
 import kotlinx.coroutines.launch
 
@@ -55,7 +55,7 @@ class SalidaFragment : Fragment() {
         repartoViewModel = ViewModelProvider(requireActivity()).get(RepartoViewModel::class.java)
         repartoViewModel.numeroReparto.observe(viewLifecycleOwner) { reparto ->
             numeroReparto = reparto
-            textNumeroReparto.text = "Reparto: $reparto"
+            textNumeroReparto.text = getString(R.string.label_reparto, reparto)
         }
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -83,16 +83,14 @@ class SalidaFragment : Fragment() {
                             SalidaItem(
                                 producto = product.name,
                                 selectedProduct = product,
-                                vueltaLleno = 0,
-                                vueltaTotal = 0,
-                                recambio = 0
+                                total = 0
                             )
                         )
                     }
 
                     adapter = SalidaAdapter(products)
                     recyclerView.adapter = adapter
-                    adapter?.submitList(salidaItems.toList())
+                    adapter?.submitList(salidaItems)
 
                     Toast.makeText(requireContext(), "Productos cargados: ${products.size}", Toast.LENGTH_SHORT).show()
                 },
@@ -112,16 +110,14 @@ class SalidaFragment : Fragment() {
                             SalidaItem(
                                 producto = product.name,
                                 selectedProduct = product,
-                                vueltaLleno = 0,
-                                vueltaTotal = 0,
-                                recambio = 0
+                                total = 0
                             )
                         )
                     }
 
                     adapter = SalidaAdapter(products)
                     recyclerView.adapter = adapter
-                    adapter?.submitList(salidaItems.toList())
+                    adapter?.submitList(salidaItems)
                 }
             )
         }
@@ -137,9 +133,15 @@ class SalidaFragment : Fragment() {
     }
 
     private fun enviarSalida() {
-        val hasData = salidaItems.any { it.vueltaTotal > 0 || it.vueltaLleno > 0 || it.recambio > 0 }
+        val hasData = salidaItems.any { it.total > 0 }
         if (!hasData) {
-            Toast.makeText(requireContext(), "Por favor ingrese al menos un dato", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Por favor ingrese al menos un total", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val repartoId = numeroReparto.toIntOrNull()
+        if (repartoId == null) {
+            Toast.makeText(requireContext(), "Número de reparto inválido", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -147,7 +149,7 @@ class SalidaFragment : Fragment() {
         btnGuardarSalida.isEnabled = false
 
         lifecycleScope.launch {
-            val request = getSalidaData()
+            val request = getOutRequest(repartoId)
 
             salidaRepository.sendSalida(request).fold(
                 onSuccess = {
@@ -176,26 +178,24 @@ class SalidaFragment : Fragment() {
         }
     }
 
-    private fun getSalidaData(): SalidaRequest {
-        val productList = mutableListOf<ProductExit>()
+    private fun getOutRequest(idReparto: Int): OutRequest {
+        val productList = mutableListOf<OutProduct>()
 
         salidaItems.forEach { item ->
-            item.selectedProduct?.let { product ->
+            val product = item.selectedProduct ?: return@forEach
+            if (item.total > 0) {
                 productList.add(
-                    ProductExit(
+                    OutProduct(
                         idProducto = product.idProducto,
-                        vta_total = item.vueltaTotal,
-                        vta_lleno = item.vueltaLleno,
-                        recambio = item.recambio
+                        total = item.total
                     )
                 )
             }
         }
 
-        return SalidaRequest(
+        return OutRequest(
             products = productList,
-            idReparto = numeroReparto.toIntOrNull() ?: 0
+            idReparto = idReparto
         )
     }
 }
-

@@ -22,6 +22,9 @@
     <string name="header_vuelta_total">Vuelta total</string>
     <string name="header_cambio">Cambio</string>
 
+    <!-- Salida table header -->
+    <string name="header_total">Total</string>
+
     <!-- Login -->
     <string name="login_title">Iniciar Sesión</string>
     <string name="login_username">Usuario</string>
@@ -32,4 +35,34 @@
     <string name="reparto_title">Número de Reparto</string>
     <string name="reparto_subtitle">Ingrese el número de reparto</string>
     <string name="reparto_continue">Continuar</string>
+    <string name="label_reparto">Reparto: %1$s</string>
+
+    <!-- Logout -->
+    <string name="action_logout">Cerrar sesión</string>
+    <string name="dialog_logout_title">Cerrar sesión</string>
+    <string name="dialog_logout_message">¿Querés cerrar sesión?</string>
+    <string name="dialog_yes">Sí</string>
+    <string name="dialog_no">No</string>
+
+    <!-- Buttons -->
+    <string name="guardar_salida_button">Guardar Salida</string>
+
+    <!-- Home screen strings -->
+    <string name="brand_title">Ciclo Café</string>
+    <string name="perfil_desc">Perfil</string>
+    <string name="user_placeholder">Usuario</string>
+    <string name="no_active_reparto">Sin reparto activo</string>
+    <string name="stats_today">Estadísticas de Hoy</string>
+    <string name="entries_desc">Entradas</string>
+    <string name="exits_desc">Salidas</string>
+    <string name="label_entries">Entradas</string>
+    <string name="label_exits">Salidas</string>
+    <string name="quick_actions">Acciones Rápidas</string>
+    <string name="entrada_desc">Entrada</string>
+    <string name="salida_desc">Salida</string>
+    <string name="register_entrada">Registrar Entrada</string>
+    <string name="register_salida">Registrar Salida</string>
+    <string name="entrada_subtitle">Productos que llegan al depósito</string>
+    <string name="salida_subtitle">Productos que salen del depósito</string>
+    <string name="zero">0</string>
 </resources>

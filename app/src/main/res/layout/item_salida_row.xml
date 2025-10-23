@@ -18,27 +18,7 @@
         android:paddingTop="12dp" />
 
     <EditText
-        android:id="@+id/editVueltaLleno"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:hint="0"
-        android:inputType="number"
-        android:textSize="14sp"
-        android:gravity="center" />
-
-    <EditText
-        android:id="@+id/editVueltaTotal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:hint="0"
-        android:inputType="number"
-        android:textSize="14sp"
-        android:gravity="center" />
-
-    <EditText
-        android:id="@+id/editRecambio"
+        android:id="@+id/editTotal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"

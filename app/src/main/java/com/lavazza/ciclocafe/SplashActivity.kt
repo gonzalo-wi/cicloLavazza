@@ -8,21 +8,16 @@ import androidx.appcompat.app.AppCompatActivity
 
 class SplashActivity : AppCompatActivity() {
 
-    private val splashDelay: Long = 2000 // 2 segundos
+    private val splashDelay: Long = 1500L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // Ocultar la action bar
-        supportActionBar?.hide()
-
-        // Navegar a MainActivity después del delay
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, MainActivity::class.java))
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             finish()
-            // Animación de transición suave
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }, splashDelay)
     }
 }
