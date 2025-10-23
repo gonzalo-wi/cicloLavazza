@@ -63,11 +63,17 @@ class MainActivity : AppCompatActivity() {
         )
         logoutItem.title = spannable
 
-        // Manejar el clic en cerrar sesión
+        // Manejar el clic en cerrar sesión y navegación personalizada
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_logout -> {
                     showLogoutDialog()
+                    drawerLayout.closeDrawers()
+                    true
+                }
+                R.id.nav_entrada, R.id.nav_gallery -> {
+                    // Para Entrada y Salida, primero ir a seleccionar reparto
+                    navController.navigate(R.id.nav_reparto)
                     drawerLayout.closeDrawers()
                     true
                 }

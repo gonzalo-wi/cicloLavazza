@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lavazza.ciclocafe.R
+import com.lavazza.ciclocafe.utils.Constants
 
 class RepartoFragment : Fragment() {
 
@@ -31,10 +32,14 @@ class RepartoFragment : Fragment() {
         btnContinuar = root.findViewById(R.id.btnContinuar)
 
         btnContinuar.setOnClickListener {
-            val numeroReparto = editNumeroReparto.text.toString()
+            val numeroReparto = editNumeroReparto.text.toString().trim()
 
             if (numeroReparto.isEmpty()) {
+                editNumeroReparto.error = "Obligatorio"
                 Toast.makeText(context, "Por favor ingrese el número de reparto", Toast.LENGTH_SHORT).show()
+            } else if (!Constants.Repartos.esRepartoValido(numeroReparto)) {
+                editNumeroReparto.error = "Solo repartos ${Constants.Repartos.REPARTO_502} o ${Constants.Repartos.REPARTO_503}"
+                Toast.makeText(context, "Solo se permiten los repartos ${Constants.Repartos.REPARTO_502} y ${Constants.Repartos.REPARTO_503}", Toast.LENGTH_LONG).show()
             } else {
                 repartoViewModel.setNumeroReparto(numeroReparto)
                 findNavController().navigate(R.id.action_repartoFragment_to_entradaFragment)
@@ -44,4 +49,3 @@ class RepartoFragment : Fragment() {
         return root
     }
 }
-

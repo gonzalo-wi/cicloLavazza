@@ -9,17 +9,17 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!-- Tema Café -->
-    <color name="coffee_primary">#6F4E37</color>
-    <color name="coffee_primary_dark">#4E3629</color>
-    <color name="coffee_primary_light">#8B6F47</color>
-    <color name="coffee_accent">#D2691E</color>
-    <color name="coffee_background">#FFFFFF</color>
-    <color name="coffee_surface">#FFFFFF</color>
-    <color name="coffee_text_primary">#3E2723</color>
-    <color name="coffee_text_secondary">#6D4C41</color>
-    <color name="coffee_cream">#F5F5DC</color>
-    <color name="coffee_light_brown">#D7CCC8</color>
+    <!-- Tema Azul Oscuro (Marca) -->
+    <color name="coffee_primary">#1A237E</color> <!-- Azul oscuro principal -->
+    <color name="coffee_primary_dark">#0D1555</color> <!-- Azul más oscuro -->
+    <color name="coffee_primary_light">#3949AB</color> <!-- Azul claro -->
+    <color name="coffee_accent">#2196F3</color> <!-- Azul brillante para acentos -->
+    <color name="coffee_background">#FFFFFF</color> <!-- Fondo blanco -->
+    <color name="coffee_surface">#FFFFFF</color> <!-- Superficies blancas -->
+    <color name="coffee_text_primary">#1A237E</color> <!-- Texto azul oscuro -->
+    <color name="coffee_text_secondary">#3949AB</color> <!-- Texto azul secundario -->
+    <color name="coffee_cream">#E8EAF6</color> <!-- Azul muy claro (reemplazo de crema) -->
+    <color name="coffee_light_brown">#C5CAE9</color> <!-- Azul claro (reemplazo de marrón claro) -->
 
     <!-- Color para logout -->
     <color name="logout_red">#D32F2F</color>

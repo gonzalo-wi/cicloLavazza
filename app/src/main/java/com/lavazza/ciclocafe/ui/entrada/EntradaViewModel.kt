@@ -4,15 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-data class EntradaItem(
-    var producto: String = "",
-    var vueltaLleno: Int = 0,
-    var vueltaTotal: Int = 0
-) {
-    val cambio: Int
-        get() = vueltaTotal - vueltaLleno
-}
-
 class EntradaViewModel : ViewModel() {
 
     private val _entradas = MutableLiveData<MutableList<EntradaItem>>().apply {
@@ -34,4 +25,3 @@ class EntradaViewModel : ViewModel() {
         }
     }
 }
-

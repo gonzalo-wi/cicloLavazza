@@ -1,4 +1,4 @@
-package com.lavazza.ciclocafe.ui.entrada
+package com.lavazza.ciclocafe.ui.salida
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,33 +13,33 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lavazza.ciclocafe.R
 import com.lavazza.ciclocafe.data.model.Product
 
-class EntradaAdapter(
+class SalidaAdapter(
     private val products: List<Product>
-) : ListAdapter<EntradaItem, EntradaAdapter.EntradaViewHolder>(EntradaDiffCallback()) {
+) : ListAdapter<SalidaItem, SalidaAdapter.SalidaViewHolder>(SalidaDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntradaViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SalidaViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_entrada_row, parent, false)
-        return EntradaViewHolder(view)
+            .inflate(R.layout.item_salida_row, parent, false)
+        return SalidaViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: EntradaViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SalidaViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    class EntradaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class SalidaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textProducto: TextView = itemView.findViewById(R.id.textProducto)
         private val editVueltaLleno: EditText = itemView.findViewById(R.id.editVueltaLleno)
         private val editVueltaTotal: EditText = itemView.findViewById(R.id.editVueltaTotal)
         private val editRecambio: EditText = itemView.findViewById(R.id.editRecambio)
 
-        private var currentItem: EntradaItem? = null
+        private var currentItem: SalidaItem? = null
 
         private var watcherLleno: TextWatcher? = null
         private var watcherTotal: TextWatcher? = null
         private var watcherRecambio: TextWatcher? = null
 
-        fun bind(item: EntradaItem) {
+        fun bind(item: SalidaItem) {
             currentItem = item
 
             textProducto.text = item.producto
@@ -83,13 +83,14 @@ class EntradaAdapter(
         }
     }
 
-    class EntradaDiffCallback : DiffUtil.ItemCallback<EntradaItem>() {
-        override fun areItemsTheSame(oldItem: EntradaItem, newItem: EntradaItem): Boolean {
+    class SalidaDiffCallback : DiffUtil.ItemCallback<SalidaItem>() {
+        override fun areItemsTheSame(oldItem: SalidaItem, newItem: SalidaItem): Boolean {
             return oldItem.selectedProduct?.idProducto == newItem.selectedProduct?.idProducto
         }
 
-        override fun areContentsTheSame(oldItem: EntradaItem, newItem: EntradaItem): Boolean {
+        override fun areContentsTheSame(oldItem: SalidaItem, newItem: SalidaItem): Boolean {
             return oldItem == newItem
         }
     }
 }
+

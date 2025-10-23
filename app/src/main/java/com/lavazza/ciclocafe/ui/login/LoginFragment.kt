@@ -62,7 +62,7 @@ class LoginFragment : Fragment() {
                 delay(1500) // Simula tiempo de carga (1.5 segundos)
 
                 // Credenciales temporales de desarrollo: Gon / gon
-                (username.equals("admin", ignoreCase = true) && password == "admin") ||
+                (username.equals("cafe", ignoreCase = true) && password == "cafe123") ||
                         (username.equals("Gon", ignoreCase = true) && password == "gon")
             }
 
@@ -78,3 +78,6 @@ class LoginFragment : Fragment() {
         }
     }
 }
+
+
+

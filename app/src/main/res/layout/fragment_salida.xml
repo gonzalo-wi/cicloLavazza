@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/coffee_background"
-    tools:context=".ui.entrada.EntradaFragment">
+    tools:context=".ui.salida.SalidaFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -102,7 +102,7 @@
 
                     <!-- RecyclerView for table rows -->
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerViewEntrada"
+                        android:id="@+id/recyclerViewSalida"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="8dp" />
@@ -111,11 +111,11 @@
 
             <!-- Botón Guardar -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnGuardarEntrada"
+                android:id="@+id/btnGuardarSalida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Guardar Entrada"
+                android:text="Guardar Salida"
                 android:textSize="16sp"
                 android:padding="16dp"
                 app:icon="@android:drawable/ic_menu_save"
@@ -137,17 +137,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Add button -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddRow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:contentDescription="Agregar fila"
-        android:src="@android:drawable/ic_input_add"
-        app:backgroundTint="@color/coffee_accent"
-        app:tint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+

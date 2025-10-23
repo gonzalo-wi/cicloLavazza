@@ -1,4 +1,4 @@
-package com.lavazza.ciclocafe.ui.entrada
+package com.lavazza.ciclocafe.ui.salida
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,28 +15,28 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lavazza.ciclocafe.R
-import com.lavazza.ciclocafe.data.model.EntradaRequest
+import com.lavazza.ciclocafe.data.model.SalidaRequest
 import com.lavazza.ciclocafe.data.model.Product
-import com.lavazza.ciclocafe.data.model.ProductEntry
-import com.lavazza.ciclocafe.data.repository.EntradaRepository
+import com.lavazza.ciclocafe.data.model.ProductExit
+import com.lavazza.ciclocafe.data.repository.SalidaRepository
 import com.lavazza.ciclocafe.data.repository.ProductRepository
 import com.lavazza.ciclocafe.ui.reparto.RepartoViewModel
 import kotlinx.coroutines.launch
 
-class EntradaFragment : Fragment() {
+class SalidaFragment : Fragment() {
 
     private lateinit var textNumeroReparto: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
-    private lateinit var btnGuardarEntrada: Button
+    private lateinit var btnGuardarSalida: Button
     private lateinit var repartoViewModel: RepartoViewModel
 
     private val repository = ProductRepository()
-    private val entradaRepository = EntradaRepository()
+    private val salidaRepository = SalidaRepository()
 
     private var products: List<Product> = emptyList()
-    private var adapter: EntradaAdapter? = null
-    private val entradaItems = mutableListOf<EntradaItem>()
+    private var adapter: SalidaAdapter? = null
+    private val salidaItems = mutableListOf<SalidaItem>()
     private var numeroReparto: String = ""
 
     override fun onCreateView(
@@ -44,12 +44,12 @@ class EntradaFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_entrada, container, false)
+        val root = inflater.inflate(R.layout.fragment_salida, container, false)
 
         textNumeroReparto = root.findViewById(R.id.textNumeroReparto)
-        recyclerView = root.findViewById(R.id.recyclerViewEntrada)
+        recyclerView = root.findViewById(R.id.recyclerViewSalida)
         progressBar = root.findViewById(R.id.progressBar)
-        btnGuardarEntrada = root.findViewById(R.id.btnGuardarEntrada)
+        btnGuardarSalida = root.findViewById(R.id.btnGuardarSalida)
 
         // ViewModel para número de reparto
         repartoViewModel = ViewModelProvider(requireActivity()).get(RepartoViewModel::class.java)
@@ -60,7 +60,7 @@ class EntradaFragment : Fragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        btnGuardarEntrada.setOnClickListener { showConfirmDialog() }
+        btnGuardarSalida.setOnClickListener { showConfirmDialog() }
 
         loadProducts()
 
@@ -77,10 +77,10 @@ class EntradaFragment : Fragment() {
                     products = productList
 
                     // Crear un item por cada producto
-                    entradaItems.clear()
+                    salidaItems.clear()
                     for (product in products) {
-                        entradaItems.add(
-                            EntradaItem(
+                        salidaItems.add(
+                            SalidaItem(
                                 producto = product.name,
                                 selectedProduct = product,
                                 vueltaLleno = 0,
@@ -90,9 +90,9 @@ class EntradaFragment : Fragment() {
                         )
                     }
 
-                    adapter = EntradaAdapter(products)
+                    adapter = SalidaAdapter(products)
                     recyclerView.adapter = adapter
-                    adapter?.submitList(entradaItems.toList())
+                    adapter?.submitList(salidaItems.toList())
 
                     Toast.makeText(requireContext(), "Productos cargados: ${products.size}", Toast.LENGTH_SHORT).show()
                 },
@@ -106,10 +106,10 @@ class EntradaFragment : Fragment() {
                         Product("P", "PEDIDO", "Pedido")
                     )
 
-                    entradaItems.clear()
+                    salidaItems.clear()
                     for (product in products) {
-                        entradaItems.add(
-                            EntradaItem(
+                        salidaItems.add(
+                            SalidaItem(
                                 producto = product.name,
                                 selectedProduct = product,
                                 vueltaLleno = 0,
@@ -119,9 +119,9 @@ class EntradaFragment : Fragment() {
                         )
                     }
 
-                    adapter = EntradaAdapter(products)
+                    adapter = SalidaAdapter(products)
                     recyclerView.adapter = adapter
-                    adapter?.submitList(entradaItems.toList())
+                    adapter?.submitList(salidaItems.toList())
                 }
             )
         }
@@ -129,34 +129,34 @@ class EntradaFragment : Fragment() {
 
     private fun showConfirmDialog() {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Confirmar Entrada")
-            .setMessage("¿Está seguro que desea guardar la entrada del reparto $numeroReparto?")
-            .setPositiveButton("Sí, Guardar") { _, _ -> enviarEntrada() }
+            .setTitle("Confirmar Salida")
+            .setMessage("¿Está seguro que desea guardar la salida del reparto $numeroReparto?")
+            .setPositiveButton("Sí, Guardar") { _, _ -> enviarSalida() }
             .setNegativeButton("Cancelar", null)
             .show()
     }
 
-    private fun enviarEntrada() {
-        val hasData = entradaItems.any { it.vueltaTotal > 0 || it.vueltaLleno > 0 || it.recambio > 0 }
+    private fun enviarSalida() {
+        val hasData = salidaItems.any { it.vueltaTotal > 0 || it.vueltaLleno > 0 || it.recambio > 0 }
         if (!hasData) {
             Toast.makeText(requireContext(), "Por favor ingrese al menos un dato", Toast.LENGTH_SHORT).show()
             return
         }
 
         progressBar.visibility = View.VISIBLE
-        btnGuardarEntrada.isEnabled = false
+        btnGuardarSalida.isEnabled = false
 
         lifecycleScope.launch {
-            val request = getEntradaData()
+            val request = getSalidaData()
 
-            entradaRepository.sendEntrada(request).fold(
+            salidaRepository.sendSalida(request).fold(
                 onSuccess = {
                     progressBar.visibility = View.GONE
-                    btnGuardarEntrada.isEnabled = true
+                    btnGuardarSalida.isEnabled = true
 
                     MaterialAlertDialogBuilder(requireContext())
                         .setTitle("Éxito")
-                        .setMessage("Entrada guardada correctamente para el reparto $numeroReparto")
+                        .setMessage("Salida guardada correctamente para el reparto $numeroReparto")
                         .setPositiveButton("OK") { _, _ ->
                             requireActivity().onBackPressedDispatcher.onBackPressed()
                         }
@@ -164,11 +164,11 @@ class EntradaFragment : Fragment() {
                 },
                 onFailure = { error ->
                     progressBar.visibility = View.GONE
-                    btnGuardarEntrada.isEnabled = true
+                    btnGuardarSalida.isEnabled = true
 
                     MaterialAlertDialogBuilder(requireContext())
                         .setTitle("Error")
-                        .setMessage("Error al guardar entrada: ${error.message}")
+                        .setMessage("Error al guardar salida: ${error.message}")
                         .setPositiveButton("OK", null)
                         .show()
                 }
@@ -176,13 +176,13 @@ class EntradaFragment : Fragment() {
         }
     }
 
-    private fun getEntradaData(): EntradaRequest {
-        val productList = mutableListOf<ProductEntry>()
+    private fun getSalidaData(): SalidaRequest {
+        val productList = mutableListOf<ProductExit>()
 
-        entradaItems.forEach { item ->
+        salidaItems.forEach { item ->
             item.selectedProduct?.let { product ->
                 productList.add(
-                    ProductEntry(
+                    ProductExit(
                         idProducto = product.idProducto,
                         vta_total = item.vueltaTotal,
                         vta_lleno = item.vueltaLleno,
@@ -192,9 +192,10 @@ class EntradaFragment : Fragment() {
             }
         }
 
-        return EntradaRequest(
+        return SalidaRequest(
             products = productList,
             idReparto = numeroReparto.toIntOrNull() ?: 0
         )
     }
 }
+

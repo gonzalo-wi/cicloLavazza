@@ -12,6 +12,10 @@
     <string name="menu_slideshow">Cerrar sesiòn</string>
     <string name="menu_entrada">Entrada</string>
 
+    <!-- Home Fragment -->
+    <string name="welcome_message">¡Bienvenido!</string>
+    <string name="app_subtitle">Sistema de Control de Reparto</string>
+
     <!-- Entrada table headers -->
     <string name="header_producto">Producto</string>
     <string name="header_vuelta_lleno">Vuelta lleno</string>

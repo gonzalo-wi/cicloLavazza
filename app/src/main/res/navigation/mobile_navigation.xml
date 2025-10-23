@@ -30,21 +30,43 @@
     <fragment
         android:id="@+id/nav_reparto"
         android:name="com.lavazza.ciclocafe.ui.reparto.RepartoFragment"
-        android:label="@string/reparto_title"
+        android:label="Seleccionar Reparto"
         tools:layout="@layout/fragment_reparto">
         <action
             android:id="@+id/action_repartoFragment_to_entradaFragment"
             app:destination="@+id/nav_entrada"
             app:popUpTo="@+id/nav_home"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_repartoFragment_to_salidaFragment"
+            app:destination="@+id/nav_salida"
+            app:popUpTo="@+id/nav_home"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="tipo_operacion"
+            app:argType="string"
+            android:defaultValue="entrada" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_entrada"
         android:name="com.lavazza.ciclocafe.ui.entrada.EntradaFragment"
         android:label="@string/menu_entrada"
-        tools:layout="@layout/fragment_entrada" />
+        tools:layout="@layout/fragment_entrada">
+        <action
+            android:id="@+id/action_entrada_to_reparto"
+            app:destination="@+id/nav_reparto" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/nav_salida"
+        android:name="com.lavazza.ciclocafe.ui.salida.SalidaFragment"
+        android:label="Salida"
+        tools:layout="@layout/fragment_salida">
+        <action
+            android:id="@+id/action_salida_to_reparto"
+            app:destination="@+id/nav_reparto" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_gallery"
