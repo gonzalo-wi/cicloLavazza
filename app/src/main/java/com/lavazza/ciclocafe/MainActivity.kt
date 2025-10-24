@@ -1,8 +1,11 @@
 package com.lavazza.ciclocafe
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
@@ -15,6 +18,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.lavazza.ciclocafe.utils.NetworkUtils
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,14 +57,26 @@ class MainActivity : AppCompatActivity() {
                     false
                 }
                 R.id.nav_entrada -> {
-                    val args = bundleOf("tipo_operacion" to "entrada")
-                    navController.navigate(R.id.nav_reparto, args)
-                    true
+                    // Validar WiFi antes de navegar a entrada
+                    if (!NetworkUtils.isConnectedToWifi(this)) {
+                        showWifiWarning()
+                        false
+                    } else {
+                        val args = bundleOf("tipo_operacion" to "entrada")
+                        navController.navigate(R.id.nav_reparto, args)
+                        true
+                    }
                 }
                 R.id.nav_salida -> {
-                    val args = bundleOf("tipo_operacion" to "salida")
-                    navController.navigate(R.id.nav_reparto, args)
-                    true
+                    // Validar WiFi antes de navegar a salida
+                    if (!NetworkUtils.isConnectedToWifi(this)) {
+                        showWifiWarning()
+                        false
+                    } else {
+                        val args = bundleOf("tipo_operacion" to "salida")
+                        navController.navigate(R.id.nav_reparto, args)
+                        true
+                    }
                 }
                 else -> NavigationUI.onNavDestinationSelected(item, navController)
             }
@@ -79,12 +95,33 @@ class MainActivity : AppCompatActivity() {
             .setTitle("Cerrar sesión")
             .setMessage("¿Querés cerrar sesión?")
             .setPositiveButton("Sí") { _, _ ->
+                // Limpiar la sesión del usuario
+                val sessionManager = com.lavazza.ciclocafe.utils.SessionManager(this)
+                sessionManager.clearSession()
+
                 val navOptions = androidx.navigation.navOptions {
                     popUpTo(R.id.mobile_navigation) { inclusive = true }
                 }
                 navController.navigate(R.id.nav_login, null, navOptions)
             }
             .setNegativeButton("No", null)
+            .show()
+    }
+
+    private fun showWifiWarning() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle("⚠️ Sin conexión WiFi")
+            .setMessage("No está conectado a la red WiFi de la empresa. Esta operación requiere conexión WiFi.\n\n¿Desea abrir la configuración de WiFi?")
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setPositiveButton("Abrir WiFi") { _, _ ->
+                try {
+                    val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    Toast.makeText(this, "No se pudo abrir la configuración de WiFi", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Cancelar", null)
             .show()
     }
 

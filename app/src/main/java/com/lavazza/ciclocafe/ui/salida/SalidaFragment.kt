@@ -1,6 +1,8 @@
 package com.lavazza.ciclocafe.ui.salida
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +23,7 @@ import com.lavazza.ciclocafe.data.model.OutRequest
 import com.lavazza.ciclocafe.data.repository.ProductRepository
 import com.lavazza.ciclocafe.data.repository.SalidaRepository
 import com.lavazza.ciclocafe.ui.reparto.RepartoViewModel
+import com.lavazza.ciclocafe.utils.NetworkUtils
 import kotlinx.coroutines.launch
 
 class SalidaFragment : Fragment() {
@@ -51,7 +54,6 @@ class SalidaFragment : Fragment() {
         progressBar = root.findViewById(R.id.progressBar)
         btnGuardarSalida = root.findViewById(R.id.btnGuardarSalida)
 
-        // ViewModel para número de reparto
         repartoViewModel = ViewModelProvider(requireActivity()).get(RepartoViewModel::class.java)
         repartoViewModel.numeroReparto.observe(viewLifecycleOwner) { reparto ->
             numeroReparto = reparto
@@ -59,11 +61,9 @@ class SalidaFragment : Fragment() {
         }
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
         btnGuardarSalida.setOnClickListener { showConfirmDialog() }
 
         loadProducts()
-
         return root
     }
 
@@ -76,7 +76,6 @@ class SalidaFragment : Fragment() {
                     progressBar.visibility = View.GONE
                     products = productList
 
-                    // Crear un item por cada producto
                     salidaItems.clear()
                     for (product in products) {
                         salidaItems.add(
@@ -98,7 +97,6 @@ class SalidaFragment : Fragment() {
                     progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), "Error al cargar productos: ${error.message}", Toast.LENGTH_LONG).show()
 
-                    // Respaldo: productos mínimos
                     products = listOf(
                         Product("K", "CAFETERA", "CAFETERA"),
                         Product("P", "PEDIDO", "Pedido")
@@ -124,10 +122,33 @@ class SalidaFragment : Fragment() {
     }
 
     private fun showConfirmDialog() {
+        // Validar WiFi antes de mostrar confirmación
+        if (!NetworkUtils.isConnectedToWifi(requireContext())) {
+            showWifiWarning()
+            return
+        }
+
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Confirmar Salida")
             .setMessage("¿Está seguro que desea guardar la salida del reparto $numeroReparto?")
             .setPositiveButton("Sí, Guardar") { _, _ -> enviarSalida() }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun showWifiWarning() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("⚠️ Sin conexión WiFi")
+            .setMessage("No está conectado a la red WiFi de la empresa. Esta operación requiere conexión WiFi para enviar los datos al servidor.\n\n¿Desea abrir la configuración de WiFi?")
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setPositiveButton("Abrir WiFi") { _, _ ->
+                try {
+                    val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    Toast.makeText(context, "No se pudo abrir la configuración de WiFi", Toast.LENGTH_SHORT).show()
+                }
+            }
             .setNegativeButton("Cancelar", null)
             .show()
     }
@@ -199,3 +220,4 @@ class SalidaFragment : Fragment() {
         )
     }
 }
+
