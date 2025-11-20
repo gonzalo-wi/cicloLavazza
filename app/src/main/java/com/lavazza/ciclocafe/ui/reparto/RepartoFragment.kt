@@ -37,13 +37,19 @@ class RepartoFragment : Fragment() {
 
         btnContinuar.setOnClickListener {
             val numeroReparto = editNumeroReparto.text.toString().trim()
+            val disponibles = Constants.Repartos.REPARTOS_DISPONIBLES
+            val listaPermitidos = if (disponibles.size <= 2) {
+                disponibles.joinToString(" y ")
+            } else {
+                disponibles.dropLast(1).joinToString(", ") + " y " + disponibles.last()
+            }
 
             if (numeroReparto.isEmpty()) {
                 editNumeroReparto.error = "Obligatorio"
                 Toast.makeText(context, "Por favor ingrese el número de reparto", Toast.LENGTH_SHORT).show()
             } else if (!Constants.Repartos.esRepartoValido(numeroReparto)) {
-                editNumeroReparto.error = "Solo repartos ${Constants.Repartos.REPARTO_502} o ${Constants.Repartos.REPARTO_503}"
-                Toast.makeText(context, "Solo se permiten los repartos ${Constants.Repartos.REPARTO_502} y ${Constants.Repartos.REPARTO_503}", Toast.LENGTH_LONG).show()
+                editNumeroReparto.error = "Solo repartos $listaPermitidos"
+                Toast.makeText(context, "Solo se permiten los repartos $listaPermitidos", Toast.LENGTH_LONG).show()
             } else {
                 repartoViewModel.setNumeroReparto(numeroReparto)
 
